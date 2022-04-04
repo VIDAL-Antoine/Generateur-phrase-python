@@ -5,7 +5,7 @@ def open_txt(fileName):
     with open(fileName, "r") as fileSubjects:
         listStrings = fileSubjects.readlines()
 
-    #Enlever les espaces et \n inutiles
+    #Enlever les espaces et '\n' inutiles
     for i in range(len(listStrings)):
         listStrings[i] = listStrings[i].strip()
     
