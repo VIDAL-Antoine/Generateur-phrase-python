@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import dictionary
+import sentence
+import dico
 
 def main():
-    dictionary.open_dictionary()
+    dico.open_dictionary()
     
     choix = 1
 
@@ -29,7 +30,12 @@ def main():
                 print("\nERREUR : Nombre hors portée.\n")
 
         if choix == 1:
-            dictionary.print_dictionary()
+            dico.print_dictionary()
+
+        if choix == 2:
+            phrase = sentence.Sentence()
+            phrase.generate_random_sentence()
+            phrase.print_sentence()
 
     print(f'\nMerci d\'avoir utilisé ce dictionnaire! Au revoir!')
 

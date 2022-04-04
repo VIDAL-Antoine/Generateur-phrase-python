@@ -11,7 +11,7 @@ comprend
 joue
 écrit
 entre
-tombe
+code
 lit
 répond
 oublie

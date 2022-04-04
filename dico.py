@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import main
-
 def open_txt(fileName):
     listStrings = []
     with open(fileName, "r") as fileSubjects:
