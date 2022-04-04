@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import sys
+
 def open_txt(fileName):
     listStrings = []
-    with open(fileName, "r") as fileSubjects:
-        listStrings = fileSubjects.readlines()
+    try:
+        with open(fileName, "r") as fileSubjects:
+            listStrings = fileSubjects.readlines()
+    except FileNotFoundError:
+        print(f'Fichier "{fileName}" inexistant. Vérifiez que vous avez mis les bons noms.')
+        sys.exit("Fin du programme. Fichier non trouvé.")
 
     #Enlever les espaces et '\n' inutiles
     for i in range(len(listStrings)):

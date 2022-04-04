@@ -6,7 +6,7 @@ import dico
 def main():
     dico.open_dictionary()
     
-    choix = 1
+    choix = -1
 
     while(choix != 0):
         print("\nBienvenue dans le générateur de phrases. Voici la liste des options disponibles :\n",
@@ -21,6 +21,7 @@ def main():
 
         try:
             choix = int(input("Veuillez choisir un nombre entre 0 et 5 : "))
+            print(f'\n##### Choix {choix} #####')
 
         except ValueError:
             print(f'\nERREUR : la saisie n\'est pas un nombre.\n')
