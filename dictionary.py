@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from fileinput import filename
 import main
 
 def open_txt(fileName):
@@ -27,10 +26,8 @@ def open_dictionary():
     verbs = open_txt('words/verbes.txt')
     adverbs = open_txt('words/adverbes.txt')
 
-
 def print_dictionary():
-    print(f'Sujets : {subjects}')
-    print(f'Verbes : {verbs}')
-    print(f'Adverbes : {adverbs}')
-
-    
+    print("\n##### Dictionnaire #####\n")
+    print(f'Sujets : {subjects}\n')
+    print(f'Verbes : {verbs}\n')
+    print(f'Adverbes : {adverbs}\n')
