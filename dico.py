@@ -30,6 +30,19 @@ def open_dictionary():
     verbs = open_txt('words/verbes.txt')
     adverbs = open_txt('words/adverbes.txt')
 
+def save_dico():
+    with open('words/sujets.txt', 'w') as fileSubjects:
+        for sjt in subjects:
+            fileSubjects.write("%s\n" % sjt)
+
+    with open('words/verbes.txt', 'w') as fileVerbs:
+        for verb in verbs:
+            fileVerbs.write("%s\n" % verb)
+
+    with open('words/adverbes.txt', 'w') as fileAdverbs:
+        for adverb in adverbs:
+            fileAdverbs.write("%s\n" % adverb)
+
 def print_dictionary():
     print("\n##### Dictionnaire #####\n")
     print(f'Sujets : {subjects}\n')

@@ -16,6 +16,7 @@ def main():
         "3 - Entrer une phrase et vérifier si elle est correcte",
         "4 - Ajouter un mot au dictionnaire",
         "5 - Retirer un mot au dictionnaire",
+        "6 - Enregistrer les modifications faites au dictionnaire",
         sep = '\n'
         )
 
@@ -27,7 +28,7 @@ def main():
             print(f'\nERREUR : la saisie n\'est pas un nombre.\n')
 
         else:
-            if choix < 0 or choix > 5:
+            if choix < 0 or choix > 6:
                 print(f'\nERREUR : Nombre hors portée.\n')
 
         if choix == 1:
@@ -71,6 +72,7 @@ def main():
                 choix = -1
 
             if choix == 1:
+                print(f'Sujets : {dico.subjects}\n')
                 sjt = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n')
                 if sjt not in dico.subjects:
                     dico.subjects.append(sjt)
@@ -79,6 +81,7 @@ def main():
                     print(f'Le sujet "{sjt}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
             if choix == 2:
+                print(f'Verbes : {dico.verbs}\n')
                 verb = input(f'Veuillez saisir le verbe que vous souhaitez ajouter. Nous supposons que vous tapez un verbe qui existe vraiment :\n')
                 if verb not in dico.verbs:
                     dico.verbs.append(verb)
@@ -86,6 +89,7 @@ def main():
                     print(f'Le verbe "{verb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
             if choix == 3:
+                print(f'Adverbes : {dico.adverbs}\n')
                 adverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez ajouter. Nous supposons que vous tapez un adverbe qui existe vraiment :\n')
                 if adverb not in dico.adverbs:
                     dico.adverbs.append(adverb)
@@ -139,6 +143,10 @@ def main():
                     dico.adverbs.remove(adverb)
                 except ValueError:
                     print(f'"{adverb}" non trouvé dans la liste des adverbes. Vérifiez qu\'il s\'y trouve bien.')
+
+        elif choix == 6:
+            dico.save_dico()
+            print(f'Les modifications ont été enregistrées.')
 
     print(f'\nMerci d\'avoir utilisé ce dictionnaire! Au revoir!')
 
