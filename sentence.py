@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+import string
 import dico
 
 class Sentence:
@@ -18,7 +19,7 @@ class Sentence:
         self.adverb = dico.adverbs[ random.randint(0, len(dico.adverbs)-1) ]
 
     @staticmethod
-    def check_is_in_dico(phrase):
+    def check_is_in_dico(phrase: string):
         if not(phrase[0].isupper()):
             print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
             return False

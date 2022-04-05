@@ -50,7 +50,6 @@ def main():
 
         elif choix == 4:
             while(choix != 0):
-                isValidString = True
                 print("\nSouhaitez-vous ajouter un sujet, un verbe ou un adverbe?\n",
                 "0 - Annuler",
                 "1 - Ajouter un sujet",
@@ -76,54 +75,15 @@ def main():
 
                 elif choix == 1:
                     print(f'Sujets : {dico.subjects}\n')
-                    sjt = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n')
-                    if not(sjt[0].isupper()):
-                        print(f'Le premier caractère n\'est pas une majuscule. Assurez-vous bien qu\'il s\'agisse d\'une majuscule.')
-                        isValidString = False
-
-                    for i in range(1, len(sjt)):
-                        if sjt[i].isupper():
-                            print(f'Une majuscule est présente dans la chaîne (hormis le premier caractère). La chaîne ne doit pas contenir de majuscule pour le premier caractère.')
-                            isValidString = False
-
-                    if isValidString:
-                        if sjt not in dico.subjects:
-                            dico.subjects.append(sjt)
-                            print(f'"{sjt}" ajouté dans les sujets.')
-                        else:
-                            print(f'Le sujet "{sjt}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+                    dico.add_subject()
 
                 elif choix == 2:
                     print(f'Verbes : {dico.verbs}\n')
-                    verb = input(f'Veuillez saisir le verbe que vous souhaitez ajouter. Nous supposons que vous tapez un verbe qui existe vraiment :\n')
-
-                    for letter in verb:
-                        if letter.isupper():
-                            print(f'Une majuscule est présente dans la chaîne. Un verbe ne doit contenir aucune majuscule.')
-                            isValidString = False
-
-                    if isValidString:
-                        if verb not in dico.verbs:
-                            dico.verbs.append(verb)
-                            print(f'"{verb}" ajouté dans les verbes.')
-                        else:
-                            print(f'Le verbe "{verb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+                    dico.add_verb()
 
                 elif choix == 3:
                     print(f'Adverbes : {dico.adverbs}\n')
-                    adverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez ajouter. Nous supposons que vous tapez un adverbe qui existe vraiment :\n')
-
-                    for letter in adverb:
-                        if letter.isupper():
-                            print(f'Une majuscule est présente dans la chaîne. Un adverbe ne doit contenir aucune majuscule.')
-                            isValidString = False
-
-                    if isValidString:
-                        if adverb not in dico.adverbs:
-                            dico.adverbs.append(adverb)
-                            print(f'"{adverb}" ajouté dans les adverbes.')
-                        else:
-                            print(f'L\'adverbe "{adverb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+                    dico.add_adverb()
 
         elif choix == 5:
             while(choix != 0):
@@ -152,31 +112,15 @@ def main():
 
                 elif choix == 1:
                     print(f'Sujets : {dico.subjects}\n')
-                    sjt = input(f'Veuillez saisir le sujet que vous souhaitez retirer. Nous supposons que vous tapez un sujet qui existe vraiment :\n')
-                    try:
-                        dico.subjects.remove(sjt)
-                        print(f'"{sjt}" retiré du dictionnaire.')
-                    except ValueError:
-                        print(f'"{sjt}" non trouvé dans la liste des sujets. Vérifiez qu\'il s\'y trouve bien.')
+                    dico.remove_item(dico.subjects)
 
                 elif choix == 2:
                     print(f'Verbes : {dico.verbs}\n')
-                    verb = input(f'Veuillez saisir le verbe que vous souhaitez retirer. Nous supposons que vous tapez un verbe qui existe vraiment :\n')
-                    try:
-                        dico.verbs.remove(verb)
-                        print(f'"{verb}" retiré du dictionnaire.')
-                    except ValueError:
-                        print(f'"{verb}" non trouvé dans la liste des verbes. Vérifiez qu\'il s\'y trouve bien.')
+                    dico.remove_item(dico.verbs)
 
                 elif choix == 3:
                     print(f'Adverbes : {dico.adverbs}\n')
-                    adverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez retirer. Nous supposons que vous tapez un adverbe qui existe vraiment :\n')
-                    print(adverb)
-                    try:
-                        dico.adverbs.remove(adverb)
-                        print(f'"{adverb}" retiré du dictionnaire.')
-                    except ValueError:
-                        print(f'"{adverb}" non trouvé dans la liste des adverbes. Vérifiez qu\'il s\'y trouve bien.')
+                    dico.remove_item(dico.adverbs)
 
         elif choix == 6:
             dico.save_dico()
