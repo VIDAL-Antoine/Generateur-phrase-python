@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import random
-import string
 import dico
 
 class Sentence:
@@ -19,7 +18,7 @@ class Sentence:
         self.adverb = dico.adverbs[ random.randint(0, len(dico.adverbs)-1) ]
 
     @staticmethod
-    def check_is_in_dico(phrase: string):
+    def check_is_in_dico(phrase: str):
         if not(phrase[0].isupper()):
             print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
             return False
@@ -32,17 +31,20 @@ class Sentence:
         phraseSplit[-1] = phraseSplit[-1][:-1] #Enlever le point du dernier mot (l'adverbe)
 
         if phraseSplit[-1] not in dico.adverbs:
+            print(f'L\'adverbe "{phraseSplit[-1]}" ne se trouve pas dans la liste.')
             return False
 
         phraseSplit.pop(-1) #Enlever l'adverbe
 
         if phraseSplit[-1] not in dico.verbs:
+            print(f'Le verbe "{phraseSplit[-1]}" ne se trouve pas dans la liste.')
             return False
 
         phraseSplit.pop(-1) #Enlever le verbe
         sjt = ' '.join(phraseSplit) #Former le sujet complet
 
         if sjt not in dico.subjects:
+            print(f'Le sujet "{sjt}" ne se trouve pas dans la liste.')
             return False
 
         return True

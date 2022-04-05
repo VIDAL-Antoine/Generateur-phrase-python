@@ -4,7 +4,9 @@ import sentence
 import dico
 
 def main():
+    print(f'Ouverture du dictionnaire...')
     dico.open_dictionary()
+    print(f'Ouverture terminée.')
     
     choix = -1
 
@@ -25,11 +27,11 @@ def main():
             print(f'\n##### Choix {choix} #####')
 
         except ValueError:
-            print(f'\nERREUR : la saisie n\'est pas un nombre.\n')
+            print(f'\nERREUR : la saisie n\'est pas un nombre.')
 
         else:
             if choix < 0 or choix > 6:
-                print(f'\nERREUR : Nombre hors portée.\n')
+                print(f'\nERREUR : Nombre hors portée.')
 
         if choix == 1:
             dico.print_dictionary()
@@ -41,7 +43,7 @@ def main():
             phrase.print_sentence()
 
         elif choix == 3:
-            phrase = input("Veuillez tapez une phrase : ")
+            phrase = input("Veuillez saisir une phrase :\n")
 
             if(sentence.Sentence.check_is_in_dico(phrase)):
                 print(f'La phrase est bien valide.')

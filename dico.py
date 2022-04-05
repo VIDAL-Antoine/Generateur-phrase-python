@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import string
 import sys
 
-def open_txt(fileName: string):
+def open_txt(fileName: str):
     listStrings = []
     try:
         with open(fileName, "r") as fileSubjects:
@@ -27,9 +26,17 @@ def open_dictionary():
     verbs = []
     adverbs = []
 
+    print(f'Lecture des sujets...')
     subjects = open_txt('words/sujets.txt')
+    print(f'Lecture terminée.')
+
+    print(f'Lecture des verbes...')
     verbs = open_txt('words/verbes.txt')
+    print(f'Lecture terminée.')
+
+    print(f'Lecture des adverbes...')
     adverbs = open_txt('words/adverbes.txt')
+    print(f'Lecture terminée.')
 
 def add_subject():
     sjt = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n')
@@ -116,17 +123,23 @@ def remove_item(listWords: list):
 
 
 def save_dico():
+    print(f'Écriture des sujets dans le fichier...')
     with open('words/sujets.txt', 'w') as fileSubjects:
         for sjt in subjects:
             fileSubjects.write("%s\n" % sjt)
+    print(f'Écriture terminée.')
 
+    print(f'Écriture des verbes dans le fichier...')
     with open('words/verbes.txt', 'w') as fileVerbs:
         for verb in verbs:
             fileVerbs.write("%s\n" % verb)
+    print(f'Écriture terminée.')
 
+    print(f'Écriture des adverbes dans le fichier...')
     with open('words/adverbes.txt', 'w') as fileAdverbs:
         for adverb in adverbs:
             fileAdverbs.write("%s\n" % adverb)
+    print(f'Écriture terminée.')
 
 def print_dictionary():
     print("\n##### Dictionnaire #####\n")
