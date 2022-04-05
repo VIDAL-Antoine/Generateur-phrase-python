@@ -28,6 +28,8 @@ def main():
     print(f'Ouverture terminée.')
 
     while(lnChoice != 0):
+        lnChoice = -1
+
         print("\nBienvenue dans le générateur de phrases. Voici la liste des options disponibles :\n",
         "0 - Quitter",
         "1 - Afficher le dictionnaire",
@@ -70,6 +72,8 @@ def main():
 
         elif lnChoice == 4:
             while(lnChoice != 0):
+                lnChoice = -1
+
                 print("\nSouhaitez-vous ajouter un sujet, un verbe ou un adverbe?\n",
                 "0 - Annuler",
                 "1 - Ajouter un sujet",
@@ -112,6 +116,8 @@ def main():
 
         elif lnChoice == 5:
             while(lnChoice != 0):
+                lnChoice = -1
+
                 print("\nSouhaitez-vous retirer un sujet, un verbe ou un adverbe?\n",
                 "0 - Annuler",
                 "1 - Retirer un sujet",
