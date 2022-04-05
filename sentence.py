@@ -21,13 +21,13 @@ class Sentence:
             -
         '''
 
-        self.subject = ""
-        self.verb = ""
-        self.adverb = ""
+        self.mwSubject = ""
+        self.mwVerb = ""
+        self.mwAdverb = ""
     
-    def print_sentence(self):
+    def printSentence(self):
         '''
-        print_sentence()
+        printSentence()
 
         Auteur : VIDAL Antoine
         Projet : Générateur de phrase
@@ -41,11 +41,11 @@ class Sentence:
         Sorties :
             -
         '''
-        print(f'{self.subject} {self.verb} {self.adverb}.')
+        print(f'{self.mwSubject} {self.mwVerb} {self.mwAdverb}.')
 
-    def generate_random_sentence(self):
+    def generateRandomSentence(self):
         '''
-        generate_random_sentence()
+        generateRandomSentence()
 
         Auteur : VIDAL Antoine
         Projet : Générateur de phrase
@@ -61,14 +61,14 @@ class Sentence:
             -
         '''
 
-        self.subject = dico.subjects[ random.randint(0, len(dico.subjects)-1) ]
-        self.verb = dico.verbs[ random.randint(0, len(dico.verbs)-1) ]
-        self.adverb = dico.adverbs[ random.randint(0, len(dico.adverbs)-1) ]
+        self.mwSubject = dico.gvSubjects[ random.randint(0, len(dico.gvSubjects)-1) ]
+        self.mwVerb = dico.gvVerbs[ random.randint(0, len(dico.gvVerbs)-1) ]
+        self.mwAdverb = dico.gvAdverbs[ random.randint(0, len(dico.gvAdverbs)-1) ]
 
     @staticmethod
-    def check_is_in_dictionary(phrase: str):
+    def checkIsInDictionary(pwPhrase: str):
         '''
-        check_is_in_dictionary()
+        checkIsInDictionary()
 
         Auteur : VIDAL Antoine
         Projet : Générateur de phrase
@@ -78,46 +78,49 @@ class Sentence:
             Une chaîne de caractères est valide si son sujet, son verbe et son adverbe appartiennent tous au dictionnaire.
 
         Entrées :
-            phrase : la chaîne de caractères à analyser
+            pwPhrase : la chaîne de caractères à analyser
 
         Sorties :
             booléen : Vrai si la phrase est valide, Faux si la phrase est invalide
         '''
 
+        lvPhraseSplit = [] #La phrase en paramtètre mais séparée en tokens
+        lwSubject = "" #Chaîne de caractères représentant la phrase sans le verbe ni l'adverbe
+
         #Retourner False dès qu'une erreur apparaît
-        if not(phrase[0].isupper()):
+        if not(pwPhrase[0].isupper()):
             print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
             return False
 
-        if phrase[-1] != '.':
+        if pwPhrase[-1] != '.':
             print(f'La phrase ne se termine pas par un point. Veuillez en ajouter si vous en avez oublié un.')
             return False
 
         #Diviser la chaîne entière pour avoir accès plus facilement aux mots
-        phraseSplit = phrase.split()
+        lvPhraseSplit = pwPhrase.split()
 
         #Enlever le point du dernier mot (l'adverbe)
-        phraseSplit[-1] = phraseSplit[-1][:-1]
+        lvPhraseSplit[-1] = lvPhraseSplit[-1][:-1]
 
-        #phraseSplit[-1] est ici l'adverbe
-        if phraseSplit[-1] not in dico.adverbs:
-            print(f'L\'adverbe "{phraseSplit[-1]}" ne se trouve pas dans la liste.')
+        #lvPhraseSplit[-1] est ici l'adverbe
+        if lvPhraseSplit[-1] not in dico.gvAdverbs:
+            print(f'L\'adverbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste.')
             return False
 
-        phraseSplit.pop(-1) #Enlever l'adverbe
+        lvPhraseSplit.pop(-1) #Enlever l'adverbe
 
-        #phraseSplit[-1] est ici le verbe
-        if phraseSplit[-1] not in dico.verbs:
-            print(f'Le verbe "{phraseSplit[-1]}" ne se trouve pas dans la liste.')
+        #lvPhraseSplit[-1] est ici le verbe
+        if lvPhraseSplit[-1] not in dico.gvVerbs:
+            print(f'Le verbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste.')
             return False
 
-        phraseSplit.pop(-1) #Enlever le verbe
+        lvPhraseSplit.pop(-1) #Enlever le verbe
 
         #Puisque le sujet peut être fait de plusieurs mots, il faut regrouper les mots restants pour avoir le sujet complet
-        sjt = ' '.join(phraseSplit)
+        lwSubject = ' '.join(lvPhraseSplit)
 
-        if sjt not in dico.subjects:
-            print(f'Le sujet "{sjt}" ne se trouve pas dans la liste.')
+        if lwSubject not in dico.gvSubjects:
+            print(f'Le sujet "{lwSubject}" ne se trouve pas dans la liste.')
             return False
 
         return True

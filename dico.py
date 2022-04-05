@@ -2,9 +2,9 @@
 
 import sys
 
-def open_txt(fileName: str):
+def openTxt(pwFileName: str):
     '''
-    open_txt()
+    openTxt()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -14,29 +14,30 @@ def open_txt(fileName: str):
         Enfin elle enlève les espaces et caractères inutiles ("\n"...) pour n'avoir que des lettres.
 
     Entrées :
-        fileName : le chemin du fichier à lire
+        lwFileName : le chemin du fichier à lire
 
     Sorties :
         listStrings : la liste contenant les données du fichier lu
     '''
 
-    listStrings = []
+    lvListStrings = [] #La liste des mots que le dictionnaire va recevoir
+
     try:
-        with open(fileName, "r") as fileSubjects:
-            listStrings = fileSubjects.readlines()
+        with open(pwFileName, "r") as lwFileSubjects:
+            lvListStrings = lwFileSubjects.readlines()
     except FileNotFoundError:
-        print(f'Fichier "{fileName}" inexistant. Vérifiez que vous avez mis les bons noms.')
+        print(f'Fichier "{pwFileName}" inexistant. Vérifiez que vous avez mis les bons noms.')
         sys.exit("Fin du programme. Fichier non trouvé.")
 
     #Enlever les espaces et '\n' inutiles
-    for i in range(len(listStrings)):
-        listStrings[i] = listStrings[i].strip()
+    for i in range(len(lvListStrings)):
+        lvListStrings[i] = lvListStrings[i].strip()
     
-    return listStrings
+    return lvListStrings
 
-def open_dictionary():
+def openDictionary():
     '''
-    open_dictionary()
+    openDictionary()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -52,29 +53,29 @@ def open_dictionary():
         -
     '''
 
-    global subjects
-    global verbs
-    global adverbs
+    global gvSubjects #La liste des sujets du dictionnaire
+    global gvVerbs #La liste des verbes du dictionnaire
+    global gvAdverbs #La liste des adverbes du dictionnaire
 
-    subjects = []
-    verbs = []
-    adverbs = []
+    gvSubjects = []
+    gvVerbs = []
+    gvAdverbs = []
 
     print(f'Lecture des sujets...')
-    subjects = open_txt('words/sujets.txt')
+    gvSubjects = openTxt('words/sujets.txt')
     print(f'Lecture terminée.')
 
     print(f'Lecture des verbes...')
-    verbs = open_txt('words/verbes.txt')
+    gvVerbs = openTxt('words/verbes.txt')
     print(f'Lecture terminée.')
 
     print(f'Lecture des adverbes...')
-    adverbs = open_txt('words/adverbes.txt')
+    gvAdverbs = openTxt('words/adverbes.txt')
     print(f'Lecture terminée.')
 
-def add_subject():
+def addSubject():
     '''
-    add_subject()
+    addSubject()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -91,35 +92,35 @@ def add_subject():
         -
     '''
 
-    sjt = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n')
-    isValidString = True
+    lwSubject = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n') #Chaîne de caractères représentant le sujet à ajouter
+    lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
     #Vérifier que la chaîne tapée est valide
-    if not(sjt[0].isupper()):
+    if not(lwSubject[0].isupper()):
         print(f'Le premier caractère n\'est pas une majuscule. Assurez-vous bien qu\'il s\'agisse d\'une majuscule.')
-        isValidString = False
+        lbIsValidString = False
 
-    for letter in sjt:
-        if letter.isdigit():
+    for liLetter in lwSubject:
+        if liLetter.isdigit():
             print(f'Un chiffre est présent dans la chaîne. Celle-ci ne doit contenir aucun chiffre.')
-            isValidString = False
+            lbIsValidString = False
             break
-        if letter != '\'' and not(letter.isalpha()):
-            print(f'Une chaîne de caractères ne peut contenir que des lettres ou un \'. Vérifier par exemple qu\'elle ne contient pas de chiffres.')
-            isValidString = False
+        if (liLetter != '\'') and (not(liLetter.isalpha())) and not(liLetter.isspace()):
+            print(f'Un sujet ne peut contenir que des lettres ou un \'. Vérifier par exemple qu\'il ne contient pas de chiffres.')
+            lbIsValidString = False
             break
 
-    if isValidString:
-        sjt.strip() #Enlever les espaces inutiles
-        if sjt not in subjects:
-            subjects.append(sjt)
-            print(f'"{sjt}" ajouté dans les sujets.')
+    if lbIsValidString:
+        lwSubject = lwSubject.strip() #Enlever les espaces inutiles
+        if lwSubject not in gvSubjects:
+            gvSubjects.append(lwSubject)
+            print(f'"{lwSubject}" ajouté dans les sujets.')
         else:
-            print(f'Le sujet "{sjt}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+            print(f'Le sujet "{lwSubject}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
-def add_verb():
+def addVerb():
     '''
-    add_verb()
+    addVerb()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -136,31 +137,31 @@ def add_verb():
         -
     '''
 
-    verb = input(f'Veuillez saisir le verbe que vous souhaitez ajouter. Nous supposons que vous tapez un verbe qui existe vraiment :\n')
-    isValidString = True
+    lwVerb = input(f'Veuillez saisir le verbe que vous souhaitez ajouter. Nous supposons que vous tapez un verbe qui existe vraiment :\n') #Chaîne de caractères représentant le verbe à ajouter
+    lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
     #Vérifier que la chaîne tapée est valide
-    for letter in verb:
-        if letter.isupper():
+    for liLetter in lwVerb:
+        if liLetter.isupper():
             print(f'Une majuscule est présente dans la chaîne. Celle-ci ne doit contenir aucune majuscule.')
-            isValidString = False
+            lbIsValidString = False
             break
-        if not(letter.isalpha()):
-            print(f'Un verbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres.')
-            isValidString = False
+        if not(liLetter.isalpha()):
+            print(f'Un verbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres ou d\'espaces.')
+            lbIsValidString = False
             break
 
-    if isValidString:
-        verb.strip() #Enlever les espaces inutiles
-        if verb not in verbs:
-            verbs.append(verb)
-            print(f'"{verb}" ajouté dans les verbes.')
+    if lbIsValidString:
+        lwVerb = lwVerb.strip() #Enlever les espaces inutiles
+        if lwVerb not in gvVerbs:
+            gvVerbs.append(lwVerb)
+            print(f'"{lwVerb}" ajouté dans les verbes.')
         else:
-            print(f'Le verbe "{verb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+            print(f'Le verbe "{lwVerb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
-def add_adverb():
+def addAdverb():
     '''
-    add_adverb()
+    addAdverb()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -177,31 +178,31 @@ def add_adverb():
         -
     '''
 
-    adverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez ajouter. Nous supposons que vous tapez un adverbe qui existe vraiment :\n')
-    isValidString = True
+    lwAdverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez ajouter. Nous supposons que vous tapez un adverbe qui existe vraiment :\n') #Chaîne de caractères représentant l'adverbe à ajouter
+    lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
     #Vérifier que la chaîne tapée est valide
-    for letter in adverb:
-        if letter.isupper():
+    for liLetter in lwAdverb:
+        if liLetter.isupper():
             print(f'Une majuscule est présente dans la chaîne. Un adverbe ne doit contenir aucune majuscule.')
-            isValidString = False
+            lbIsValidString = False
             break
-        if not(letter.isalpha()):
-            print(f'Un adverbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres.')
-            isValidString = False
+        if not(liLetter.isalpha()):
+            print(f'Un adverbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres ou d\'espaces.')
+            lbIsValidString = False
             break
 
-    if isValidString:
-        adverb.strip() #Enlever les espaces inutiles
-        if adverb not in adverbs:
-            adverbs.append(adverb)
-            print(f'"{adverb}" ajouté dans les adverbes.')
+    if lbIsValidString:
+        lwAdverb = lwAdverb.strip() #Enlever les espaces inutiles
+        if lwAdverb not in gvAdverbs:
+            gvAdverbs.append(lwAdverb)
+            print(f'"{lwAdverb}" ajouté dans les adverbes.')
         else:
-            print(f'L\'adverbe "{adverb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+            print(f'L\'adverbe "{lwAdverb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
-def remove_item(listWords: list):
+def removeItem(pvListWords: list):
     '''
-    remove_item()
+    removeItem()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -210,24 +211,24 @@ def remove_item(listWords: list):
         Demande une chaîne de caractères puis l'enlève de la liste souhaitée si celle-ci la contient.
 
     Entrées :
-        listWords : la liste de mots qui doit avoir un élément retiré
+        pvListWords : la liste de mots qui doit avoir un élément retiré
 
     Sorties :
         -
     '''
 
-    item = input(f'Veuillez saisir l\'objet que vous souhaitez retirer. Nous supposons que vous tapez un mot qui existe vraiment :\n')
+    lwItem = input(f'Veuillez saisir l\'objet que vous souhaitez retirer. Nous supposons que vous tapez un mot qui existe vraiment :\n') #Chaîne de caractères représentant l'objet à supprimer
 
     try:
-        listWords.remove(item)
-        print(f'"{item}" retiré du dictionnaire.')
+        pvListWords.remove(lwItem)
+        print(f'"{lwItem}" retiré du dictionnaire.')
     except ValueError:
-        print(f'"{item}" non trouvé dans la liste. Vérifiez qu\'il s\'y trouve bien.')
+        print(f'"{lwItem}" non trouvé dans la liste. Vérifiez qu\'il s\'y trouve bien.')
 
 
-def save_dictionary():
+def saveDictionary():
     '''
-    save_dictionary()
+    saveDictionary()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -243,26 +244,26 @@ def save_dictionary():
     '''
 
     print(f'Écriture des sujets dans le fichier...')
-    with open('words/sujets.txt', 'w') as fileSubjects:
-        for sjt in subjects:
-            fileSubjects.write("%s\n" % sjt)
+    with open('words/sujets.txt', 'w') as lwFileSubjects:
+        for liSubject in gvSubjects:
+            lwFileSubjects.write("%s\n" % liSubject)
     print(f'Écriture terminée.')
 
     print(f'Écriture des verbes dans le fichier...')
-    with open('words/verbes.txt', 'w') as fileVerbs:
-        for verb in verbs:
-            fileVerbs.write("%s\n" % verb)
+    with open('words/verbes.txt', 'w') as lwFileVerbs:
+        for liVerb in gvVerbs:
+            lwFileVerbs.write("%s\n" % liVerb)
     print(f'Écriture terminée.')
 
     print(f'Écriture des adverbes dans le fichier...')
-    with open('words/adverbes.txt', 'w') as fileAdverbs:
-        for adverb in adverbs:
-            fileAdverbs.write("%s\n" % adverb)
+    with open('words/adverbes.txt', 'w') as lwFileAdverbs:
+        for liAdverb in gvAdverbs:
+            lwFileAdverbs.write("%s\n" % liAdverb)
     print(f'Écriture terminée.')
 
-def print_dictionary():
+def printDictionary():
     '''
-    print_dictionary()
+    printDictionary()
 
     Auteur : VIDAL Antoine
     Projet : Générateur de phrase
@@ -278,6 +279,6 @@ def print_dictionary():
     '''
 
     print("\n##### Dictionnaire #####\n")
-    print(f'Sujets : {subjects}\n')
-    print(f'Verbes : {verbs}\n')
-    print(f'Adverbes : {adverbs}\n')
+    print(f'Sujets : {gvSubjects}\n')
+    print(f'Verbes : {gvVerbs}\n')
+    print(f'Adverbes : {gvAdverbs}\n')

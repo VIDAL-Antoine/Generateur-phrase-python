@@ -3,7 +3,6 @@
 import sentence
 import dico
 
-
 def main():
     '''
     main()
@@ -22,13 +21,13 @@ def main():
         -
     '''
 
-    print(f'Ouverture du dictionnaire...')
-    dico.open_dictionary()
-    print(f'Ouverture terminée.')
-    
-    choix = -1
+    lnChoice = -1 #Représente l'option choisie l'utilisateur, réinitialisée à -1 après qu'une option soit effectuée
 
-    while(choix != 0):
+    print(f'Ouverture du dictionnaire...')
+    dico.openDictionary()
+    print(f'Ouverture terminée.')
+
+    while(lnChoice != 0):
         print("\nBienvenue dans le générateur de phrases. Voici la liste des options disponibles :\n",
         "0 - Quitter",
         "1 - Afficher le dictionnaire",
@@ -42,36 +41,35 @@ def main():
 
         #Vérifier que la saisie est bien un chiffre représentant une action possible
         try:
-            choix = int(input("Veuillez choisir un nombre entre 0 et 5 : "))
-            print(f'\n##### Choix {choix} #####')
+            lnChoice = int(input("Veuillez choisir un nombre entre 0 et 5 : "))
 
         except ValueError:
             print(f'\nERREUR : la saisie n\'est pas un nombre.')
 
         else:
-            if choix < 0 or choix > 6:
+            if lnChoice < 0 or lnChoice > 6:
                 print(f'\nERREUR : Nombre hors portée.')
 
-        #Effectuer le choix de l'utilisateur
-        if choix == 1:
-            dico.print_dictionary()
+        #Effectuer le lnChoice de l'utilisateur
+        if lnChoice == 1:
+            dico.printDictionary()
 
-        elif choix == 2:
-            phrase = sentence.Sentence()
-            phrase.generate_random_sentence()
+        elif lnChoice == 2:
+            lsSentenceRandom = sentence.Sentence() #phrase créée pour générer une phrase aléatoire
+            lsSentenceRandom.generateRandomSentence()
             print(f'\nLa phrase générée est la suivante :')
-            phrase.print_sentence()
+            lsSentenceRandom.printSentence()
 
-        elif choix == 3:
-            phrase = input("Veuillez saisir une phrase :\n")
+        elif lnChoice == 3:
+            lwPhraseCheck = input("Veuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
 
-            if(sentence.Sentence.check_is_in_dictionary(phrase)):
+            if(sentence.Sentence.checkIsInDictionary(lwPhraseCheck)):
                 print(f'La phrase est bien valide.')
             else:
                 print(f'La phrase n\'est pas valide.')
 
-        elif choix == 4:
-            while(choix != 0):
+        elif lnChoice == 4:
+            while(lnChoice != 0):
                 print("\nSouhaitez-vous ajouter un sujet, un verbe ou un adverbe?\n",
                 "0 - Annuler",
                 "1 - Ajouter un sujet",
@@ -82,35 +80,38 @@ def main():
 
                 #Vérifier que la saisie est bien un chiffre représentant une action possible
                 try:
-                    choix = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
-                    print(f'\n##### Choix {choix} #####')
+                    lnChoice = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
 
                 except ValueError:
                     print(f'\nERREUR : la saisie n\'est pas un nombre.\n')
 
                 else:
-                    if choix < 0 or choix > 3:
+                    if lnChoice < 0 or lnChoice > 3:
                         print(f'\nERREUR : Nombre hors portée.\n')
 
-                if choix == 0:
-                    choix = -1
+                if lnChoice == 0:
+                    lnChoice = -1
                     break
 
                 #Ajouter dans la liste adéquate
-                elif choix == 1:
-                    print(f'Sujets : {dico.subjects}\n')
-                    dico.add_subject()
+                elif lnChoice == 1:
+                    print(f'Sujets : {dico.gvSubjects}\n')
+                    dico.addSubject()
 
-                elif choix == 2:
-                    print(f'Verbes : {dico.verbs}\n')
-                    dico.add_verb()
+                elif lnChoice == 2:
+                    print(f'Verbes : {dico.gvVerbs}\n')
+                    dico.addVerb()
 
-                elif choix == 3:
-                    print(f'Adverbes : {dico.adverbs}\n')
-                    dico.add_adverb()
+                elif lnChoice == 3:
+                    print(f'Adverbes : {dico.gvAdverbs}\n')
+                    dico.addAdverb()
 
-        elif choix == 5:
-            while(choix != 0):
+                else:
+                    #L'utilisateur a tapé une option non reconnue
+                    pass
+
+        elif lnChoice == 5:
+            while(lnChoice != 0):
                 print("\nSouhaitez-vous retirer un sujet, un verbe ou un adverbe?\n",
                 "0 - Annuler",
                 "1 - Retirer un sujet",
@@ -121,36 +122,43 @@ def main():
 
                 #Vérifier que la saisie est bien un chiffre représentant une action possible
                 try:
-                    choix = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
-                    print(f'\n##### Choix {choix} #####')
+                    lnChoice = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
 
                 except ValueError:
                     print(f'\nERREUR : la saisie n\'est pas un nombre.\n')
 
                 else:
-                    if choix < 0 or choix > 3:
+                    if lnChoice < 0 or lnChoice > 3:
                         print(f'\nERREUR : Nombre hors portée.\n')
 
-                if choix == 0:
-                    choix = -1
+                if lnChoice == 0:
+                    lnChoice = -1
                     break
 
                 #Retirer de la liste adéquate
-                elif choix == 1:
-                    print(f'Sujets : {dico.subjects}\n')
-                    dico.remove_item(dico.subjects)
+                elif lnChoice == 1:
+                    print(f'Sujets : {dico.gvSubjects}\n')
+                    dico.removeItem(dico.gvSubjects)
 
-                elif choix == 2:
-                    print(f'Verbes : {dico.verbs}\n')
-                    dico.remove_item(dico.verbs)
+                elif lnChoice == 2:
+                    print(f'Verbes : {dico.gvVerbs}\n')
+                    dico.removeItem(dico.gvVerbs)
 
-                elif choix == 3:
-                    print(f'Adverbes : {dico.adverbs}\n')
-                    dico.remove_item(dico.adverbs)
+                elif lnChoice == 3:
+                    print(f'Adverbes : {dico.gvAdverbs}\n')
+                    dico.removeItem(dico.gvAdverbs)
 
-        elif choix == 6:
-            dico.save_dictionary()
+                else:
+                    #L'utilisateur a tapé une option non reconnue
+                    pass
+
+        elif lnChoice == 6:
+            dico.saveDictionary()
             print(f'Les modifications ont été enregistrées.')
+
+        else:
+            #L'utilisateur a tapé une option non reconnue
+            pass
 
     print(f'\nMerci d\'avoir utilisé ce dictionnaire! Au revoir!')
 
