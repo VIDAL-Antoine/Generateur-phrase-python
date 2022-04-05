@@ -3,7 +3,25 @@
 import sentence
 import dico
 
+
 def main():
+    '''
+    main()
+
+    Auteur : VIDAL Antoine
+    Projet : Générateur de phrase
+
+    Description :
+    La fonction principale du programme. L'utilisateur doit saisir un nombre représentant son action désirée.
+    Pour quitter, l'utilisateur doit saisir 0.
+
+    Entrées :
+        -
+
+    Sorties :
+        -
+    '''
+
     print(f'Ouverture du dictionnaire...')
     dico.open_dictionary()
     print(f'Ouverture terminée.')
@@ -22,6 +40,7 @@ def main():
         sep = '\n'
         )
 
+        #Vérifier que la saisie est bien un chiffre représentant une action possible
         try:
             choix = int(input("Veuillez choisir un nombre entre 0 et 5 : "))
             print(f'\n##### Choix {choix} #####')
@@ -33,6 +52,7 @@ def main():
             if choix < 0 or choix > 6:
                 print(f'\nERREUR : Nombre hors portée.')
 
+        #Effectuer le choix de l'utilisateur
         if choix == 1:
             dico.print_dictionary()
 
@@ -45,7 +65,7 @@ def main():
         elif choix == 3:
             phrase = input("Veuillez saisir une phrase :\n")
 
-            if(sentence.Sentence.check_is_in_dico(phrase)):
+            if(sentence.Sentence.check_is_in_dictionary(phrase)):
                 print(f'La phrase est bien valide.')
             else:
                 print(f'La phrase n\'est pas valide.')
@@ -60,6 +80,7 @@ def main():
                 sep = '\n'
                 )
 
+                #Vérifier que la saisie est bien un chiffre représentant une action possible
                 try:
                     choix = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
                     print(f'\n##### Choix {choix} #####')
@@ -75,6 +96,7 @@ def main():
                     choix = -1
                     break
 
+                #Ajouter dans la liste adéquate
                 elif choix == 1:
                     print(f'Sujets : {dico.subjects}\n')
                     dico.add_subject()
@@ -97,6 +119,7 @@ def main():
                 sep = '\n'
                 )
 
+                #Vérifier que la saisie est bien un chiffre représentant une action possible
                 try:
                     choix = int(input("Veuillez choisir un nombre entre 0 et 3 : "))
                     print(f'\n##### Choix {choix} #####')
@@ -112,6 +135,7 @@ def main():
                     choix = -1
                     break
 
+                #Retirer de la liste adéquate
                 elif choix == 1:
                     print(f'Sujets : {dico.subjects}\n')
                     dico.remove_item(dico.subjects)
@@ -125,7 +149,7 @@ def main():
                     dico.remove_item(dico.adverbs)
 
         elif choix == 6:
-            dico.save_dico()
+            dico.save_dictionary()
             print(f'Les modifications ont été enregistrées.')
 
     print(f'\nMerci d\'avoir utilisé ce dictionnaire! Au revoir!')
