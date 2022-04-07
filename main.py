@@ -87,7 +87,7 @@ def main():
             lsSentenceRandom.printSentence()
 
         elif lEChoice == 3:
-            lwPhraseCheck = input("Veuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
+            lwPhraseCheck = input("\nVeuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
             if not(lwPhraseCheck):
                 print("La phrase est vide. Veuillez saisir une phrase pour pouvoir la vérifier.")
             else:
