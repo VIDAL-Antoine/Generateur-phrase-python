@@ -5,7 +5,7 @@ chante
 dort
 parle
 respire
-donne
+s'assoit
 part
 comprend
 joue
@@ -14,7 +14,7 @@ entre
 code
 lit
 répond
-oublie
+se lave
 vient
 change
 apprend

@@ -1,7 +1,6 @@
 lentement
 rapidement
 longtemps
-parfois
 toujours
 certainement
 tellement
@@ -11,10 +10,11 @@ aujourd'hui
 bientôt
 vraiment
 volontiers
-suffisamment
+tout à fait
 beaucoup
 complètement
-dehors
 également
 enfin
 maintenant
+n'importe comment
+sans conteste

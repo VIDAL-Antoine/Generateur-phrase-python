@@ -24,7 +24,7 @@ def getUserChoice(pnUpperBound : int):
 
     lEChoice = -1
     try:
-        lEChoice = int(input("Veuillez choisir un nombre entre 0 et 5 : "))
+        lEChoice = int(input(f'Veuillez choisir un nombre entre 0 et {pnUpperBound} : '))
 
     except ValueError:
         print(f'\nERREUR : la saisie n\'est pas un nombre.')
@@ -88,10 +88,11 @@ def main():
 
         elif lEChoice == 3:
             lwPhraseCheck = input("\nVeuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
+            lsSentence = sentence.Sentence() #Structure pour pouvoir différencier le sujet du verbe...
             if not(lwPhraseCheck):
                 print("La phrase est vide. Veuillez saisir une phrase pour pouvoir la vérifier.")
             else:
-                if(sentence.Sentence.checkIsInDictionary(lwPhraseCheck)):
+                if(lsSentence.checkIsInDictionary(lwPhraseCheck)):
                     print(f'La phrase est bien valide.')
                 else:
                     print(f'La phrase n\'est pas valide.')
@@ -122,11 +123,11 @@ def main():
 
                 elif lEChoice == 2:
                     print(f'Verbes : {dico.gvVerbs}\n')
-                    dico.addVerb()
+                    dico.addVerbAdverb(dico.gvVerbs)
 
                 elif lEChoice == 3:
                     print(f'Adverbes : {dico.gvAdverbs}\n')
-                    dico.addAdverb()
+                    dico.addVerbAdverb(dico.gvAdverbs)
 
                 else:
                     #L'utilisateur a tapé une option non reconnue

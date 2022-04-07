@@ -76,8 +76,7 @@ class Sentence:
         else:
             self.mbhasAdverb = False
 
-    @staticmethod
-    def checkIsInDictionary(pwPhrase: str):
+    def checkIsInDictionary(self, pwPhrase: str):
         '''
         checkIsInDictionary()
 
@@ -86,9 +85,10 @@ class Sentence:
 
         Description :
             Prend une chaîne de caractères et indique si celle-ci est valide.
-            Une chaîne de caractères est valide si son sujet, son verbe et son adverbe appartiennent tous au dictionnaire.
+            Une chaîne de caractères est valide si son sujet, son verbe et facultativement son adverbe appartiennent tous au dictionnaire.
 
         Entrées :
+            self : l'objet en question
             pwPhrase : la chaîne de caractères à analyser
 
         Sorties :
@@ -96,7 +96,6 @@ class Sentence:
         '''
 
         lvPhraseSplit = [] #La phrase en paramtère mais séparée en tokens
-        lwSubject = "" #Chaîne de caractères représentant la phrase sans le verbe ni l'adverbe
 
         if not(pwPhrase[0].isupper()):
             print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
@@ -115,33 +114,73 @@ class Sentence:
         #Diviser la chaîne entière pour avoir accès plus facilement aux mots
         lvPhraseSplit = pwPhrase.split()
 
-        #Enlever le point du dernier mot (l'adverbe)
+        #Enlever le point du dernier mot
         lvPhraseSplit[-1] = lvPhraseSplit[-1][:-1]
 
-        #lvPhraseSplit[-1] est ici l'adverbe
-        if lvPhraseSplit[-1] not in dico.gvAdverbs:
-            print(f'Le mot "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste des adverbes. Il peut s\'agir d\'un verbe (dans ce cas la phrase sera sans adverbe).')
-        else:
-            #Le dernier mot est bien un adverbe donc il faut l'enlever
-            print(f'Le mot "{lvPhraseSplit[-1]}" se trouve bien dans la liste des adverbes.')
-            lvPhraseSplit.pop(-1)
-
-        #lvPhraseSplit[-1] est ici le verbe
-        if lvPhraseSplit[-1] not in dico.gvVerbs:
-            print(f'Le verbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste des verbes.')
+        #Vérifier le sujet
+        self.mwSubject = checkGroupOfWordsInList(lvPhraseSplit, dico.gvSubjects)
+        if self.mwSubject == "":
             return False
         else:
-            print(f'Le verbe "{lvPhraseSplit[-1]}" se trouve bien dans la liste des verbes.')
+            #Un sujet a bien été trouvé dans le dictionnaire donc nous continuons
+            pass
 
-        lvPhraseSplit.pop(-1) #Enlever le verbe
-
-        #Puisque le sujet peut être fait de plusieurs mots, il faut regrouper les mots restants pour avoir le sujet complet
-        lwSubject = ' '.join(lvPhraseSplit)
-
-        if lwSubject not in dico.gvSubjects:
-            print(f'Le sujet "{lwSubject}" ne se trouve pas dans la liste des sujets.')
+        self.mwVerb = checkGroupOfWordsInList(lvPhraseSplit, dico.gvVerbs)
+        if self.mwVerb == "":
             return False
         else:
-            print(f'Le sujet "{lwSubject}" se trouve bien dans la liste des sujets.')
+            #Un verbe a bien été trouvé dans le dictionnaire donc nous continuons
+            pass
+
+        self.mwAdverb = checkGroupOfWordsInList(lvPhraseSplit, dico.gvAdverbs)
+        if self.mwAdverb == "Adverbe absent de la liste":
+            self.mwAdverb == ""
+            return False
+        else:
+            #Un adverbe a bien été trouvé dans le dictionnaire ou la phrase n'a pas d'adverbe donc nous nous arrêtons
+            pass
 
         return True
+
+def checkGroupOfWordsInList(pvPhraseSplit : str, pvWordList : list):
+    '''
+    checkIsInDictionary()
+
+    Auteur : VIDAL Antoine
+    Projet : Générateur de phrase
+
+    Description :
+        Prend une chaîne de caractères et indique si celle-ci est valide.
+        Une chaîne de caractères est valide si son sujet, son verbe et facultativement son adverbe appartiennent tous au dictionnaire.
+
+    Entrées :
+        self : l'objet en question
+        pwPhrase : la chaîne de caractères à analyser
+
+    Sorties :
+        chaîne : la chaîne de caractères appartenant au dictionnaire, "" si la chaîne n'appartient pas au dictionnaire ou si la phrase n'a pas d'adverbe, "Adverbe absent de la liste" si la fin de la phrase contient un adverbe non présent dans la liste. 
+    '''
+
+    try:
+        lwString = pvPhraseSplit[0] #Chaîne de caractères représentant la phrase sans le verbe ni l'adverbe
+        i = 0 #Compteur permettant de parcourir les mots de la liste
+
+        while i < len(pvPhraseSplit):
+            if lwString in pvWordList:
+                print(f'"{lwString}" se trouve bien dans la liste.')
+                del pvPhraseSplit[:i+1]
+                return lwString
+
+            #Puisque l'adverbe est facultatif, il faut différencier le cas d'un adverbe absent d'un adverbe mal écrit
+            #On regarde donc si le dernier groupe de mots est bien dans la liste des adverbes (si non cela veut dire qu'il a mal été écrit)
+            elif i == len(pvPhraseSplit)-1 and lwString not in dico.gvAdverbs:
+                    return "Adverbe absent de la liste"
+            else:
+                #
+                pass
+            i += 1
+            lwString = lwString + ' ' + pvPhraseSplit[i]
+
+    except IndexError:
+        print(f'Chaîne non trouvée. Il se peut que la phrase soit sans adverbe ou que le mot tapé n\'existe pas.')
+        return ""
