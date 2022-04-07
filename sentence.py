@@ -24,6 +24,7 @@ class Sentence:
         self.mwSubject = ""
         self.mwVerb = ""
         self.mwAdverb = ""
+        self.mbhasAdverb = True
     
     def printSentence(self):
         '''
@@ -41,7 +42,11 @@ class Sentence:
         Sorties :
             -
         '''
-        print(f'{self.mwSubject} {self.mwVerb} {self.mwAdverb}.')
+
+        if(self.mbhasAdverb):
+            print(f'{self.mwSubject} {self.mwVerb} {self.mwAdverb}.')
+        else:
+            print(f'{self.mwSubject} {self.mwVerb}.')
 
     def generateRandomSentence(self):
         '''
@@ -63,7 +68,13 @@ class Sentence:
 
         self.mwSubject = dico.gvSubjects[ random.randint(0, len(dico.gvSubjects)-1) ]
         self.mwVerb = dico.gvVerbs[ random.randint(0, len(dico.gvVerbs)-1) ]
-        self.mwAdverb = dico.gvAdverbs[ random.randint(0, len(dico.gvAdverbs)-1) ]
+
+        #Prendre un adverbe de façon aléatoire
+        if(random.choice([True, False])):
+            self.mbhasAdverb = True
+            self.mwAdverb = dico.gvAdverbs[ random.randint(0, len(dico.gvAdverbs)-1) ]
+        else:
+            self.mbhasAdverb = False
 
     @staticmethod
     def checkIsInDictionary(pwPhrase: str):
@@ -84,17 +95,22 @@ class Sentence:
             booléen : Vrai si la phrase est valide, Faux si la phrase est invalide
         '''
 
-        lvPhraseSplit = [] #La phrase en paramtètre mais séparée en tokens
+        lvPhraseSplit = [] #La phrase en paramtère mais séparée en tokens
         lwSubject = "" #Chaîne de caractères représentant la phrase sans le verbe ni l'adverbe
 
-        #Retourner False dès qu'une erreur apparaît
         if not(pwPhrase[0].isupper()):
             print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
             return False
+        else:
+            print(f'La phrase commence bien par une majuscule.')
 
         if pwPhrase[-1] != '.':
             print(f'La phrase ne se termine pas par un point. Veuillez en ajouter si vous en avez oublié un.')
             return False
+        else:
+            print(f'La phrase se termine bien par un point.')
+
+        print(f'Vérification du contenu de la phrase...')
 
         #Diviser la chaîne entière pour avoir accès plus facilement aux mots
         lvPhraseSplit = pwPhrase.split()
@@ -104,15 +120,18 @@ class Sentence:
 
         #lvPhraseSplit[-1] est ici l'adverbe
         if lvPhraseSplit[-1] not in dico.gvAdverbs:
-            print(f'L\'adverbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste.')
-            return False
-
-        lvPhraseSplit.pop(-1) #Enlever l'adverbe
+            print(f'Le mot "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste des adverbes. Il peut s\'agir d\'un verbe (dans ce cas la phrase sera sans adverbe).')
+        else:
+            #Le dernier mot est bien un adverbe donc il faut l'enlever
+            print(f'Le mot "{lvPhraseSplit[-1]}" se trouve bien dans la liste des adverbes.')
+            lvPhraseSplit.pop(-1)
 
         #lvPhraseSplit[-1] est ici le verbe
         if lvPhraseSplit[-1] not in dico.gvVerbs:
-            print(f'Le verbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste.')
+            print(f'Le verbe "{lvPhraseSplit[-1]}" ne se trouve pas dans la liste des verbes.')
             return False
+        else:
+            print(f'Le verbe "{lvPhraseSplit[-1]}" se trouve bien dans la liste des verbes.')
 
         lvPhraseSplit.pop(-1) #Enlever le verbe
 
@@ -120,7 +139,9 @@ class Sentence:
         lwSubject = ' '.join(lvPhraseSplit)
 
         if lwSubject not in dico.gvSubjects:
-            print(f'Le sujet "{lwSubject}" ne se trouve pas dans la liste.')
+            print(f'Le sujet "{lwSubject}" ne se trouve pas dans la liste des sujets.')
             return False
+        else:
+            print(f'Le sujet "{lwSubject}" se trouve bien dans la liste des sujets.')
 
         return True

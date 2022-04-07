@@ -95,20 +95,35 @@ def addSubject():
     lwSubject = input(f'Veuillez saisir le sujet que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n') #Chaîne de caractères représentant le sujet à ajouter
     lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
+    if not(lwSubject):
+        print("La chaîne est vide. Veuillez saisir des caractères pour pouvoir les ajouter au dictionnaire.")
+        lbIsValidString = False
+        return
+    else:
+        print(f'La chaîne n\'est pas vide. Vérification de la validité de la chaîne...')
+
     #Vérifier que la chaîne tapée est valide
     if not(lwSubject[0].isupper()):
         print(f'Le premier caractère n\'est pas une majuscule. Assurez-vous bien qu\'il s\'agisse d\'une majuscule.')
         lbIsValidString = False
+    else:
+        print(f'Le premier caractère est bien une majuscule.')
 
     for liLetter in lwSubject:
         if liLetter.isdigit():
-            print(f'Un chiffre est présent dans la chaîne. Celle-ci ne doit contenir aucun chiffre.')
+            print(f'Un chiffre est présent dans la chaîne. Un sujet ne doit contenir aucun chiffre.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
         if (liLetter != '\'') and (not(liLetter.isalpha())) and not(liLetter.isspace()):
             print(f'Un sujet ne peut contenir que des lettres ou un \'. Vérifier par exemple qu\'il ne contient pas de chiffres.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
 
     if lbIsValidString:
         lwSubject = lwSubject.strip() #Enlever les espaces inutiles
@@ -117,6 +132,9 @@ def addSubject():
             print(f'"{lwSubject}" ajouté dans les sujets.')
         else:
             print(f'Le sujet "{lwSubject}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+    else:
+        #La chaîne n'est pas valide. On ne la cherche donc pas dans la liste.
+        pass
 
 def addVerb():
     '''
@@ -140,16 +158,29 @@ def addVerb():
     lwVerb = input(f'Veuillez saisir le verbe que vous souhaitez ajouter. Nous supposons que vous tapez un verbe qui existe vraiment :\n') #Chaîne de caractères représentant le verbe à ajouter
     lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
+    if not(lwVerb):
+        print("La chaîne est vide. Veuillez saisir des caractères pour pouvoir les ajouter au dictionnaire.")
+        lbIsValidString = False
+        return
+    else:
+        print(f'La chaîne n\'est pas vide. Vérification de la validité de la chaîne...')
+
     #Vérifier que la chaîne tapée est valide
     for liLetter in lwVerb:
         if liLetter.isupper():
-            print(f'Une majuscule est présente dans la chaîne. Celle-ci ne doit contenir aucune majuscule.')
+            print(f'Une majuscule est présente dans la chaîne. Un verbe ne doit contenir aucune majuscule.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
         if not(liLetter.isalpha()):
-            print(f'Un verbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres ou d\'espaces.')
+            print(f'Un verbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'il ne contient pas de chiffres ou d\'espaces.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
 
     if lbIsValidString:
         lwVerb = lwVerb.strip() #Enlever les espaces inutiles
@@ -158,6 +189,9 @@ def addVerb():
             print(f'"{lwVerb}" ajouté dans les verbes.')
         else:
             print(f'Le verbe "{lwVerb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+    else:
+        #La chaîne n'est pas valide. On ne la cherche donc pas dans la liste.
+        pass
 
 def addAdverb():
     '''
@@ -181,16 +215,30 @@ def addAdverb():
     lwAdverb = input(f'Veuillez saisir l\'adverbe que vous souhaitez ajouter. Nous supposons que vous tapez un adverbe qui existe vraiment :\n') #Chaîne de caractères représentant l'adverbe à ajouter
     lbIsValidString = True #Booléen permettant de savoir si une chaîne de caractères est valide.
 
+    if not(lwAdverb):
+        print("La chaîne est vide. Veuillez saisir des caractères pour pouvoir les ajouter au dictionnaire.")
+        lbIsValidString = False
+        return
+    else:
+        print(f'La chaîne n\'est pas vide. Vérification de la validité de la chaîne...')
+
     #Vérifier que la chaîne tapée est valide
     for liLetter in lwAdverb:
         if liLetter.isupper():
             print(f'Une majuscule est présente dans la chaîne. Un adverbe ne doit contenir aucune majuscule.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
+
         if not(liLetter.isalpha()):
             print(f'Un adverbe ne peut contenir que des lettres minuscules. Vérifier par exemple qu\'elle ne contient pas de chiffres ou d\'espaces.')
             lbIsValidString = False
             break
+        else:
+            #La chaîne reste valide.
+            pass
 
     if lbIsValidString:
         lwAdverb = lwAdverb.strip() #Enlever les espaces inutiles
@@ -199,6 +247,9 @@ def addAdverb():
             print(f'"{lwAdverb}" ajouté dans les adverbes.')
         else:
             print(f'L\'adverbe "{lwAdverb}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
+    else:
+        #La chaîne n'est pas valide. On ne la cherche donc pas dans la liste.
+        pass
 
 def removeItem(pvListWords: list):
     '''
@@ -243,6 +294,7 @@ def saveDictionary():
         -
     '''
 
+    print()
     print(f'Écriture des sujets dans le fichier...')
     with open('words/sujets.txt', 'w') as lwFileSubjects:
         for liSubject in gvSubjects:
