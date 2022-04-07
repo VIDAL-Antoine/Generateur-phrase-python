@@ -1,5 +1,5 @@
 # Générateur de Phrase #
-## VIDAL Antoine #@
+## VIDAL Antoine ##
 
 ### Installation et exécution ###
 
@@ -42,5 +42,7 @@ Le programme permet de faire les choses suivantes :
 
 Voici donc quelques phrases valides :
 "Monsieur mange souvent."
+
 "Le joueur boit."
+
 "Un grand homme joue lentement."
