@@ -82,7 +82,7 @@ def addSubject():
 
     Description :
         Ajoute un sujet à la liste des sujets.
-        La fonction regarde d'abord si le sujet souhaité est valide et n'existe pas encore puis l'ajoute.
+        La fonction vérifie d'abord si le sujet souhaité est valide et n'existe pas encore puis l'ajoute.
         Un sujet est valide s'il commence par une majuscule et s'il contient uniquement des lettres, des espaces ou des apostrophes.
 
     Entrées :
@@ -92,34 +92,41 @@ def addSubject():
         -
     '''
 
-    lwString = input(f'Veuillez saisir la chaîne que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n') #Chaîne de caractères représentant le sujet à ajouter
+    lwString = input(f'Veuillez saisir la chaîne que vous souhaitez ajouter. Nous supposons qu\'un mot tapé est correct :\n') #Chaîne de caractères représentant la chaîne à ajouter
+    lwString = " ".join(lwString.split()) #Enlever les espaces inutiles
 
     #Vérifier que la chaîne tapée est valide
+    #Vérifier que la chaîne n'est pas vide
     if lwString:
         print(f'La chaîne n\'est pas vide. Vérification de la validité de la chaîne...')
     else:
         print(f'La chaîne est vide. Veuillez saisir des caractères pour pouvoir ajouter une chaîne.')
+        return
+
+    #Vérifier que la chaîne commence par une majuscule
     if lwString[0].isupper():
         print(f'Le premier caractère est bien une majuscule.')
     else:
         print(f'Le premier caractère n\'est pas une majuscule. Assurez-vous bien qu\'il s\'agisse d\'une majuscule.')
         return
 
+    #Vérifier que le reste des caractères sont valides
     for liLetter in lwString[1:len(lwString)]:
-        print(liLetter)
+        #Le caractère est correct, on passe au suivant
         if (liLetter.isalpha() and liLetter.islower()) or liLetter == '\'' or liLetter.isspace():
-            #Le caractère est correct, on passe au suivant
             pass
+        #Un caractère non valide a été trouvé. La chaîne n'est donc pas valide.
         else:
             print(f'Une chaîne ne peut contenir que des lettres ou un \'. Vérifier par exemple qu\'elle ne contient pas de chiffres ou des majuscules (en dehors de la première lettre).')
             return
 
     print(f'Les caractères de la chaîne sont corrects.')
 
-    lwString = lwString.strip() #Enlever les espaces inutiles
+    #On essaie d'ajouter la chaîne puisqu'elle a été considérée comme valide (et si elle n'existe pas déjà)
     if lwString not in gvSubjects:
         gvSubjects.append(lwString)
         print(f'"{lwString}" ajouté dans la liste.')
+    #On ne l'ajoute pas si elle existe déjà
     else:
         print(f'"{lwString}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
@@ -132,8 +139,8 @@ def addVerbAdverb(pvListWords : list):
 
     Description :
         Ajoute une chaîne saisie à la liste pvListWords.
-        La fonction regarde d'abord si la chaîne saisie est valide et n'existe pas encore puis l'ajoute.
-        Une chaîne est valide si elle contient uniquement des lettres, des espaces ou des apostrophes.
+        La fonction vérifie d'abord si la chaîne saisie est valide et n'existe pas encore puis l'ajoute.
+        Une chaîne est valide si elle contient uniquement des lettres minuscules, des espaces ou des apostrophes.
 
     Entrées :
         pvListWords : la liste dans laquelle la chaîne saisie sera ajoutée
@@ -142,28 +149,34 @@ def addVerbAdverb(pvListWords : list):
         -
     '''
 
-    lwString = input(f'Veuillez saisir la chaîne que vous souhaitez ajouter. Nous supposons que vous tapez un sujet qui existe vraiment :\n') #Chaîne de caractères représentant le sujet à ajouter
+    lwString = input(f'Veuillez saisir la chaîne que vous souhaitez ajouter. Nous supposons qu\'un mot tapé est correct :\n') #Chaîne de caractères représentant la chaîne à ajouter
+    lwString = " ".join(lwString.split()) #Enlever les espaces inutiles
 
     #Vérifier que la chaîne tapée est valide
+    #Vérifier que la chaîne n'est pas vide
     if lwString:
         print(f'La chaîne n\'est pas vide. Vérification de la validité de la chaîne...')
     else:
         print(f'La chaîne est vide. Veuillez saisir des caractères pour pouvoir ajouter une chaîne.')
+        return
 
+    #Vérifier que les caractères de la chaîne sont valides
     for liLetter in lwString:
+        #Le caractère est correct, on passe au suivant
         if (liLetter.isalpha() and liLetter.islower()) or liLetter == '\'' or liLetter.isspace():
-            #Le caractère est correct, on passe au suivant
             pass
+        #Un caractère non valide a été trouvé. La chaîne n'est donc pas valide.
         else:
             print(f'Une chaîne ne peut contenir que des lettres ou un \'. Vérifier par exemple qu\'elle ne contient pas de chiffres ou des majuscules (dans le cas d\'un verbe ou adverbe).')
             return
 
     print(f'Les caractères de la chaîne sont corrects.')
 
-    lwString = lwString.strip() #Enlever les espaces inutiles
+    #On essaie d'ajouter la chaîne puisqu'elle a été considérée comme valide (et si elle n'existe pas déjà)
     if lwString not in pvListWords:
         pvListWords.append(lwString)
         print(f'"{lwString}" ajouté dans la liste.')
+    #On ne l'ajoute pas si elle existe déjà
     else:
         print(f'"{lwString}" est déjà dans le dictionnaire. Inutile de l\'ajouter.')
 
@@ -185,12 +198,18 @@ def removeItem(pvListWords: list):
     '''
 
     lwItem = input(f'Veuillez saisir l\'objet que vous souhaitez retirer. Nous supposons que vous tapez un mot qui existe vraiment :\n') #Chaîne de caractères représentant l'objet à supprimer
+    lwItem = " ".join(lwItem.split()) #Enlever les espaces inutiles
 
-    try:
-        pvListWords.remove(lwItem)
-        print(f'"{lwItem}" retiré du dictionnaire.')
-    except ValueError:
-        print(f'"{lwItem}" non trouvé dans la liste. Vérifiez qu\'il s\'y trouve bien.')
+    #On vérifie si la chaîne est vide
+    if not(lwItem):
+        print(f'La chaîne est vide. Veuillez saisir des caractères pour pouvoir supprimer un élément.')
+    else:
+        #On enlève l'élement s'il existe
+        try:
+            pvListWords.remove(lwItem)
+            print(f'"{lwItem}" retiré du dictionnaire.')
+        except ValueError:
+            print(f'"{lwItem}" non trouvé dans la liste. Vérifiez qu\'il s\'y trouve bien.')
 
 
 def saveDictionary():
@@ -210,6 +229,7 @@ def saveDictionary():
         -
     '''
 
+    #On enregistre les listes avec un élément par ligne et une liste par fichier
     print()
     print(f'Écriture des sujets dans le fichier...')
     with open('words/sujets.txt', 'w') as lwFileSubjects:

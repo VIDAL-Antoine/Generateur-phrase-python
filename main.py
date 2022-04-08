@@ -76,28 +76,36 @@ def main():
         #Vérifier que la saisie est bien un chiffre représentant une action possible
         lEChoice = getUserChoice(6)
 
-        #Effectuer le lEChoice de l'utilisateur
+        #Effectuer le choix de l'utilisateur
+
+        #Affichage du dictionnaire
         if lEChoice == 1:
             dico.printDictionary()
 
+        #Génération d'une phrase automatique
         elif lEChoice == 2:
             lsSentenceRandom = sentence.Sentence() #phrase créée pour générer une phrase aléatoire
             lsSentenceRandom.generateRandomSentence()
             print(f'\nLa phrase générée est la suivante :')
             lsSentenceRandom.printSentence()
 
+        #Saisie d'une phrase et vérification de celle-ci
         elif lEChoice == 3:
             lwPhraseCheck = input("\nVeuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
+            lwPhraseCheck = lwPhraseCheck.strip()
             lsSentence = sentence.Sentence() #Structure pour pouvoir différencier le sujet du verbe...
             if not(lwPhraseCheck):
                 print("La phrase est vide. Veuillez saisir une phrase pour pouvoir la vérifier.")
             else:
-                if(lsSentence.checkIsInDictionary(lwPhraseCheck)):
+                if(lsSentence.checkIsValidSentence(lwPhraseCheck)):
                     print(f'La phrase est bien valide.')
                 else:
                     print(f'La phrase n\'est pas valide.')
 
+        #Ajouter un mot au dictionnaire
         elif lEChoice == 4:
+
+            #Rester dans le menu d'ajout tant que l'utilisateur le souhaite
             while(lEChoice != 0):
                 lEChoice = -1
 
@@ -112,6 +120,7 @@ def main():
                 #Vérifier que la saisie est bien un chiffre représentant une action possible
                 lEChoice = getUserChoice(3)
 
+                #Quitter le menu d'ajout
                 if lEChoice == 0:
                     lEChoice = -1
                     break
@@ -129,11 +138,14 @@ def main():
                     print(f'Adverbes : {dico.gvAdverbs}\n')
                     dico.addVerbAdverb(dico.gvAdverbs)
 
+                #L'utilisateur a tapé une option non reconnue
                 else:
-                    #L'utilisateur a tapé une option non reconnue
                     pass
 
+        #Retirer un mot du dictionnaire
         elif lEChoice == 5:
+
+            #Rester dans le menu de retrait tant que l'utilisateur le souhaite
             while(lEChoice != 0):
                 lEChoice = -1
 
@@ -148,6 +160,7 @@ def main():
                 #Vérifier que la saisie est bien un chiffre représentant une action possible
                 lEChoice = getUserChoice(3)
 
+                #Quitter le menu de retrait
                 if lEChoice == 0:
                     lEChoice = -1
                     break
@@ -165,16 +178,17 @@ def main():
                     print(f'\nAdverbes : {dico.gvAdverbs}\n')
                     dico.removeItem(dico.gvAdverbs)
 
+                #L'utilisateur a tapé une option non reconnue
                 else:
-                    #L'utilisateur a tapé une option non reconnue
                     pass
 
+        #Enregistrer les modifications faites au dictionnaire
         elif lEChoice == 6:
             dico.saveDictionary()
             print(f'Les modifications ont été enregistrées.')
 
+        #L'utilisateur a tapé une option non reconnue
         else:
-            #L'utilisateur a tapé une option non reconnue
             pass
 
     print(f'\nMerci d\'avoir utilisé ce dictionnaire! Au revoir!')
