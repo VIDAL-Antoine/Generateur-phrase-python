@@ -62,15 +62,15 @@ def openDictionary():
     gvAdverbs = []
 
     print(f'Lecture des sujets...')
-    gvSubjects = openTxt('words/sujets.txt')
+    gvSubjects = openTxt('mots/sujets.txt')
     print(f'Lecture terminée.')
 
     print(f'Lecture des verbes...')
-    gvVerbs = openTxt('words/verbes.txt')
+    gvVerbs = openTxt('mots/verbes.txt')
     print(f'Lecture terminée.')
 
     print(f'Lecture des adverbes...')
-    gvAdverbs = openTxt('words/adverbes.txt')
+    gvAdverbs = openTxt('mots/adverbes.txt')
     print(f'Lecture terminée.')
 
 def addSubject():
@@ -232,19 +232,19 @@ def saveDictionary():
     #On enregistre les listes avec un élément par ligne et une liste par fichier
     print()
     print(f'Écriture des sujets dans le fichier...')
-    with open('words/sujets.txt', 'w') as lwFileSubjects:
+    with open('mots/sujets.txt', 'w') as lwFileSubjects:
         for liSubject in gvSubjects:
             lwFileSubjects.write("%s\n" % liSubject)
     print(f'Écriture terminée.')
 
     print(f'Écriture des verbes dans le fichier...')
-    with open('words/verbes.txt', 'w') as lwFileVerbs:
+    with open('mots/verbes.txt', 'w') as lwFileVerbs:
         for liVerb in gvVerbs:
             lwFileVerbs.write("%s\n" % liVerb)
     print(f'Écriture terminée.')
 
     print(f'Écriture des adverbes dans le fichier...')
-    with open('words/adverbes.txt', 'w') as lwFileAdverbs:
+    with open('mots/adverbes.txt', 'w') as lwFileAdverbs:
         for liAdverb in gvAdverbs:
             lwFileAdverbs.write("%s\n" % liAdverb)
     print(f'Écriture terminée.')
