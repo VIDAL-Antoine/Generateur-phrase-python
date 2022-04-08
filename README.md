@@ -12,8 +12,9 @@ Dans ces fichiers une ligne représente un mot (ou un groupe de mot), il n'y a p
 ### Format des mots et d'une phrase ###
 Le dictionnaire doit respecter les contraintes suivantes :
 - un mot ne peut contenir que des lettres minuscules (sauf pour la première lettre du sujet). Les chiffres ne sont pas inclus (puisqu'une phrase simple n'est pas censée en inclure).
-- le verbe et l'adverbe ne sont composés que d'un seul mot. Ainsi ils ne peuvent pas avoir d'espaces.
-- le sujet doit commencer par une majuscule étant donné qu'il représente le début de la phrase. Il est la seule fonction grammaticale pouvant supporter des espaces. Ceci permet donc d'insérer par exemple des adjectifs.
+- le sujet doit commencer par une majuscule.
+- une fonctionnalité grammaticale peut contenir autant de mots que possible. Les espaces sont ainsi gérés.
+- l'existence du mot ne sera pas vérifiée. On suppose donc que les mots saisis sont corrects.
 
 Une phrase doit respecter les contraintes suivantes :
 - une phrase commence par une majuscule (ici le début de la phrase est toujours le sujet).
@@ -21,7 +22,6 @@ Une phrase doit respecter les contraintes suivantes :
 - une phrase contient un sujet, un verbe et peut contenir un adverbe.
 
 ### Fonctionnalités ###
-
 Le programme permet de faire les choses suivantes :
 
 - Afficher le dictionnaire (en se basant sur les fichiers .txt)
@@ -31,16 +31,14 @@ Le programme permet de faire les choses suivantes :
 - Retirer un mot au dictionnaire
 - Enregistrer les modifications faites au dictionnaire (pour pouvoir le réutiliser plus tard)
 
-/!\ Les modifications faites ne sont pas enregistrées automatiquement. Vérifier que vous utilisez bien  l'option d'enregistrement avant de quitter. /!\
-
+/!\ Les modifications faites ne sont pas enregistrées automatiquement. Vérifier que vous utilisez bien l'option d'enregistrement avant de quitter. /!\
 
 ### Exemples de mots et phrases valides ###
-
-- Sujets valides : "Monsieur", "L'ISTY", "Le joueur", "Un grand homme"
-- Verbes valides : "mange", "boit", "joue"
-- Adverbes valides : "souvent", "rapidement" "lentement"
+- Sujets valides : "Monsieur", "L'ISTY", Un grand homme"
+- Verbes valides : "mange", "se lave", "s'assoit"
+- Adverbes valides : "souvent", "n'importe ecomment" "sans conteste"
 
 Voici donc quelques phrases valides :
 "Monsieur mange souvent."
-"Le joueur boit."
-"Un grand homme joue lentement."
+"L'ISTY se lave."
+"Un grand homme s'assoit n'importe comment."
