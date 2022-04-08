@@ -11,15 +11,15 @@ Dans ces fichiers une ligne représente un mot (ou un groupe de mot), il n'y a p
 
 ### Format des mots et d'une phrase ###
 Le dictionnaire doit respecter les contraintes suivantes :
-- un mot ne peut contenir que des lettres minuscules (sauf pour la première lettre du sujet). Les chiffres ne sont pas inclus (puisqu'une phrase simple n'est pas censée en inclure).
-- le sujet doit commencer par une majuscule.
+- un mot ne peut contenir que des lettres minuscules (sauf pour le sujet) ou l'apostrophe "'". Les chiffres ne sont pas inclus (puisqu'une phrase simple n'est pas censée en inclure).
+- le sujet doit commencer par une majuscule. Il peut également contenir d'autres majuscules (par exemple pour les sigles).
 - une fonctionnalité grammaticale peut contenir autant de mots que possible. Les espaces sont ainsi gérés.
 - l'existence du mot ne sera pas vérifiée. On suppose donc que les mots saisis sont corrects.
 
 Une phrase doit respecter les contraintes suivantes :
 - une phrase commence par une majuscule (ici le début de la phrase est toujours le sujet).
 - une phrase se termine par un point.
-- une phrase contient un sujet, un verbe et peut contenir un adverbe.
+- une phrase contient un (et uniquement un) sujet, un (et uniquement un) verbe et peut contenir un (et uniquement un) adverbe.
 
 ### Fonctionnalités ###
 Le programme permet de faire les choses suivantes :

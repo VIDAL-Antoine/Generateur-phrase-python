@@ -94,13 +94,14 @@ def main():
             lwPhraseCheck = input("\nVeuillez saisir une phrase :\n") #phrase créée pour vérifier sa validité
             lwPhraseCheck = lwPhraseCheck.strip()
             lsSentence = sentence.Sentence() #Structure pour pouvoir différencier le sujet du verbe...
-            if not(lwPhraseCheck):
-                print("La phrase est vide. Veuillez saisir une phrase pour pouvoir la vérifier.")
-            else:
+
+            if len(lwPhraseCheck) != 0:
                 if(lsSentence.checkIsValidSentence(lwPhraseCheck)):
                     print(f'La phrase est bien valide.')
                 else:
                     print(f'La phrase n\'est pas valide.')
+            else:
+                print("La phrase est vide. Veuillez saisir une phrase pour pouvoir la vérifier.")
 
         #Ajouter un mot au dictionnaire
         elif lEChoice == 4:

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from ast import Index
 import random
 import dico
 
@@ -99,17 +100,17 @@ class Sentence:
 
         #Vérification si la phrase commence par une majuscule
         if not(pwPhrase[0].isupper()):
-            print(f'La phrase ne commence pas par une majuscule. Veuillez vous assurer que celle-ci commence par une majuscule.')
+            print(f'ERREUR : Le premier caractère "{pwPhrase[0]}" n\'est pas une majuscule. Assurez-vous bien qu\'il s\'agisse d\'une majuscule.')
             return False
         else:
-            print(f'La phrase commence bien par une majuscule.')
+            print(f'Le premier caractère "{pwPhrase[0]}" est bien une majuscule.')
 
         #Vérification si la phrase se termine par un point
         if pwPhrase[-1] == '.':
             print(f'La phrase se termine bien par un point.')
             pwPhrase = pwPhrase[:-1] ##Enlever le point de la phraseOn enlève le point de la phrase
         else:
-            print(f'La phrase ne se termine pas par un point. Veuillez en ajouter si vous en avez oublié un.')
+            print(f'ERREUR : La phrase se termine par "{pwPhrase[-1]}" qui n\'est pas un point. Veuillez en ajouter si vous en avez oublié un.')
             return False
 
         print(f'Vérification du contenu de la phrase...')
@@ -140,7 +141,7 @@ class Sentence:
             pass
 
         #S'il ne reste plus de mots alors cela signifie que la phrase est sans adverbe. La phrase est valide jusqu'ici donc la phrase reste valide.
-        if not(lvPhraseSplit):
+        if len(lvPhraseSplit) == 0:
             self.mbHasAdverb = False
             return True
         #Il reste des mots à traiter dans la phrase. Nous passons donc aux mots suivants.
@@ -158,6 +159,14 @@ class Sentence:
         #L'adverbe a été trouvé dans le dictionnaire
         else:
             self.mbHasAdverb = True
+
+        #Si la liste n'est pas vide alors cela signifie qu'il y a des mots en trop
+        if len(lvPhraseSplit) != 0:
+            print(f'ERREUR : La phrase contient un sujet, un verbe et un adverbe mais il reste des mots.')
+            return False
+        #Il ne reste plus de mots après l'adverbe donc la phrase est valide
+        else:
+            pass
 
         return True
 
@@ -180,26 +189,30 @@ def checkGroupOfWordsInList(pvPhraseSplit : str, pvWordList : list):
         chaîne : la chaîne de caractères appartenant au dictionnaire, "" si la chaîne n'appartient pas au dictionnaire.
     '''
 
-    lwString = pvPhraseSplit[0] #Chaîne de caractères représentant la phrase sans le verbe ni l'adverbe
-    i = 0 #Compteur permettant de parcourir les mots de la liste
+    try:
+        lwString = pvPhraseSplit[0] #Chaîne de caractères qui va recevoir les tokens de la liste.
+        i = 0 #Compteur permettant de parcourir les mots de la liste
 
-    #Parcours de la liste de mots tant qu'il reste des mots
-    while i < len(pvPhraseSplit):
+        #Parcours de la liste de mots tant qu'il reste des mots
+        while i < len(pvPhraseSplit):
 
-        #Le groupe de mots a été trouvé dans le dictionnaire. Il est donc valide.
-        if lwString in pvWordList:
-            print(f'"{lwString}" se trouve bien dans la liste.')
-            del pvPhraseSplit[:i+1] #Supprimer les i premiers éléments de la liste
-            return lwString
+            #Le groupe de mots a été trouvé dans le dictionnaire. Il est donc valide.
+            if lwString in pvWordList:
+                print(f'"{lwString}" se trouve bien dans la liste.')
+                del pvPhraseSplit[:i+1] #Supprimer les i premiers éléments de la liste
+                return lwString
 
-        #Le groupe de mots n'a pas été trouvé dans le dictionnaire. Nous ajoutons donc le mot suivant.
-        else:
-            i += 1
-            try:
-                lwString = lwString + ' ' + pvPhraseSplit[i]
+            #Le groupe de mots n'a pas été trouvé dans le dictionnaire. Nous ajoutons donc le mot suivant.
+            else:
+                i += 1
+                try:
+                    lwString = lwString + ' ' + pvPhraseSplit[i]
 
-            #Si les instructions échouent, cela signifie que la fin de la phrase est atteinte (puisque i >= len(pvPhraseSplit)).
-            #Il n'y a plus de mots à tester. Le groupe de mots n'est donc pas dans le dictionnaire. La phrase n'est pas valide.
-            except IndexError:
-                print(f'"{lwString}" non trouvé dans la liste.')
-                return ""
+                #Si les instructions échouent, cela signifie que la fin de la phrase est atteinte (puisque i >= len(pvPhraseSplit)).
+                #Il n'y a plus de mots à tester. Le groupe de mots n'est donc pas dans le dictionnaire. La phrase n'est pas valide.
+                except IndexError:
+                    print(f'ERREUR : "{lwString}" non trouvé dans la liste.')
+                    return ""
+    except IndexError:
+        print(f'ERREUR : il se peut qu\'il n\'y ait plus de mots à analyser.')
+        return ""
